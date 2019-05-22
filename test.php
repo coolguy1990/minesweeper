@@ -67,10 +67,10 @@ class BoardTest extends TestCase
     {
         $this->expectException(BombExplodedException::class);
         $this->board->start();
-        while (true) {
-            $x = mt_rand(0, $this->length - 1);
-            $y = mt_rand(0, $this->width - 1);
-            $this->board->selectCoord($x, $y);
+        for ($i = 0; $i < $this->length; $i++) {
+            for ($j = 0; $j < $this->width; $j++) {
+                $this->board->selectCoord($i, $j);
+            }
         }
     }
 }
