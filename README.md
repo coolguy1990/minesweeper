@@ -1,0 +1,2 @@
+- `/cmd.sh composer install`
+- `./cmd.sh php test.php`

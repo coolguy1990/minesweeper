@@ -1,0 +1,16 @@
+{
+    "name": "kunal/minesweeper",
+    "type": "project",
+    "license": "MIT",
+    "require": {
+        "symfony/console": "^4.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8"
+    },
+    "autoload": {
+        "psr-4": {
+            "Minesweeper\\": "src/"
+        }
+    }
+}
