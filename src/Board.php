@@ -12,25 +12,37 @@ use Minesweeper\Error\OutOfBoundException;
  */
 class Board
 {
-
     /**
+     * Bomb display character
      *
+     * @var string
      */
     const BOMB = 'X';
 
     /**
+     * Length of Board
+     *
      * @var int
      */
     protected $length;
+
     /**
+     * Width of Board
+     *
      * @var int
      */
     protected $width;
+
     /**
+     * Total bombs in board.
+     *
      * @var int
      */
     protected $bombCount;
+
     /**
+     * Board property.
+     *
      * @var
      */
     protected $board;
@@ -50,7 +62,7 @@ class Board
     }
 
     /**
-     *
+     * Places bombs on the board at random positions.
      */
     private function spreadBomb()
     {
@@ -59,7 +71,7 @@ class Board
             $y = mt_rand(0, $this->width - 1);
             // If already placed bomb at coords, fallback one step back to get new coords
             if ($this->getCoord($x, $y) === self::BOMB) {
-                // this ensures bomb count is fullfilled
+                // this ensures bomb count is fulfilled
                 $i--;
                 continue;
             }
@@ -68,7 +80,7 @@ class Board
     }
 
     /**
-     *
+     * Create the board and bomb.
      */
     public function start()
     {
@@ -82,7 +94,7 @@ class Board
     }
 
     /**
-     *
+     * Empty board.
      */
     public function finish()
     {
@@ -90,6 +102,8 @@ class Board
     }
 
     /**
+     * Selects a coord on board based on user selection(user click).
+     *
      * @param $x
      * @param $y
      *
@@ -130,6 +144,8 @@ class Board
     }
 
     /**
+     * Get coords from board.
+     *
      * @param $x
      * @param $y
      *

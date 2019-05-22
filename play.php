@@ -10,6 +10,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Question\Question;
+use Exception;
 
 /**
  * Class MinesweeperCommand
@@ -34,21 +35,29 @@ class MinesweeperCommand extends Command
     protected $board;
 
     /**
+     * Default board length.
+     *
      * @var int
      */
     protected $length = 20;
 
     /**
+     * Default board width.
+     *
      * @var int
      */
     protected $width = 30;
 
     /**
+     * Default bomb count for the game.
+     *
      * @var int
      */
     protected $bombCount = 25;
 
     /**
+     * To check if game started or not?
+     *
      * @var bool
      */
     protected $started = false;
@@ -74,7 +83,7 @@ class MinesweeperCommand extends Command
         while (true) {
             try {
                 $this->boardProcess($input, $output);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->started = false;
                 $this->printBoard($output);
 
@@ -92,6 +101,8 @@ class MinesweeperCommand extends Command
     }
 
     /**
+     * Process the board.
+     *
      * @param InputInterface $input
      * @param OutputInterface $output
      *
@@ -113,7 +124,7 @@ class MinesweeperCommand extends Command
 
         if ( ! is_numeric($x) || ! is_numeric($y)) {
             $output->writeln('<error>Invalid coordinates</error>');
-            throw new \Exception();
+            throw new Exception();
         }
         $x = trim($x);
         $y = trim($y);
@@ -122,6 +133,8 @@ class MinesweeperCommand extends Command
     }
 
     /**
+     * Prints the board.
+     *
      * @param OutputInterface $output
      */
     public function printBoard(OutputInterface $output)
