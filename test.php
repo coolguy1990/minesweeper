@@ -1,6 +1,8 @@
 <?php
 
 use Minesweeper\Board;
+use Minesweeper\Error\GameNotStartedException;
+use Minesweeper\Error\OutOfBoundException;
 use PHPUnit\Framework\TestCase;
 
 class BoardTest extends TestCase
@@ -27,7 +29,8 @@ class BoardTest extends TestCase
         $this->assertInstanceOf(Board::class, $this->board);
     }
 
-    public function testBombCount() {
+    public function testBombCount()
+    {
         $this->board->start();
         // get count of bombs
         $bombNumber = 0;
@@ -35,12 +38,27 @@ class BoardTest extends TestCase
             for ($j = 0; $j < $this->width; $j++) {
                 $coord = $this->board->getCoord($i, $j);
 
-                if ($coord !== NULL) {
+                if ($coord !== null) {
                     $bombNumber++;
                 }
             }
         }
 
         $this->assertEquals($bombNumber, $this->bombCount);
+    }
+
+    public function testOutOfBoundExceptionThrown()
+    {
+        $this->expectException(OutOfBoundException::class);
+        $this->board->start();
+        $this->board->selectCoord(200, 100);
+    }
+
+    public function testGameNotStartedExceptionThrown()
+    {
+        $this->expectException(GameNotStartedException::class);
+        $this->board->start();
+        $this->board->finish();
+        $this->board->selectCoord(10, 10);
     }
 }
