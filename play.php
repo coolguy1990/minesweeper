@@ -3,14 +3,12 @@
 require __DIR__ . '/vendor/autoload.php';
 
 use Minesweeper\Board;
-use Minesweeper\Error\BombExplodedException;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Question\Question;
-use Exception;
 
 /**
  * Class MinesweeperCommand
@@ -83,13 +81,11 @@ class MinesweeperCommand extends Command
         while (true) {
             try {
                 $this->boardProcess($input, $output);
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 $this->started = false;
                 $this->printBoard($output);
 
-                if ($e instanceof BombExplodedException) {
-                    $output->writeln("\n\nKaboom!!! You Lost!");
-                }
+                $output->writeln("\n\n {$e->getMessage()}");
 
                 $question = new ConfirmationQuestion("Do you wish to restart the game? (y/n) ", false);
                 $ans      = $this->question->ask($input, $output, $question);
@@ -106,7 +102,7 @@ class MinesweeperCommand extends Command
      * @param InputInterface $input
      * @param OutputInterface $output
      *
-     * @throws Exception
+     * @throws \Exception
      */
     protected function boardProcess(InputInterface $input, OutputInterface $output)
     {
@@ -124,7 +120,7 @@ class MinesweeperCommand extends Command
 
         if ( ! is_numeric($x) || ! is_numeric($y)) {
             $output->writeln('<error>Invalid coordinates</error>');
-            throw new Exception();
+            throw new \Exception();
         }
         $x = trim($x);
         $y = trim($y);
