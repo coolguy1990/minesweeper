@@ -85,7 +85,7 @@ class MinesweeperCommand extends Command
                 $this->started = false;
                 $this->printBoard($output);
 
-                $output->writeln("\n\n {$e->getMessage()}");
+                $output->writeln("\n\n <error>{$e->getMessage()}</error>");
 
                 $question = new ConfirmationQuestion("Do you wish to restart the game? (y/n) ", false);
                 $ans      = $this->question->ask($input, $output, $question);

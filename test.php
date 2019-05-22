@@ -1,6 +1,7 @@
 <?php
 
 use Minesweeper\Board;
+use Minesweeper\Error\BombExplodedException;
 use Minesweeper\Error\GameNotStartedException;
 use Minesweeper\Error\OutOfBoundException;
 use PHPUnit\Framework\TestCase;
@@ -60,5 +61,16 @@ class BoardTest extends TestCase
         $this->board->start();
         $this->board->finish();
         $this->board->selectCoord(10, 10);
+    }
+
+    public function testBombExplodedExceptionThrown()
+    {
+        $this->expectException(BombExplodedException::class);
+        $this->board->start();
+        while (true) {
+            $x = mt_rand(0, $this->length - 1);
+            $y = mt_rand(0, $this->width - 1);
+            $this->board->selectCoord($x, $y);
+        }
     }
 }
